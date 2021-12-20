@@ -9,9 +9,7 @@ import (
 )
 
 type AuthData struct {
-	UserID string `json:"user_id"`
-	Role   string `json:"role"`
-	IP     string `json:"ip"`
+	UserID   string `json:"user_id"`
 }
 
 type Metadata map[string]interface{}
@@ -28,10 +26,13 @@ func Generate(authData *AuthData) (*Token, error) {
 	}
 
 	jwt := newJWTHelper()
-	tokenKey := generate_id.NewID(defined.SystemTokenDomain)
-	tokenValue, err := jwt.Generate(structs.Map(authData))
+	tokenKey := generate_id.NewID(defined.TokenDomain)
+	metadata := structs.Map(authData)
+	metadata["token_key"] = tokenKey
+
+	tokenValue, err := jwt.Generate(metadata)
 	if err != nil {
-		return nil,  err
+		return nil, err
 	}
 
 	return &Token{
@@ -47,18 +48,18 @@ func Validate(token string) bool {
 	return valid
 }
 
-func ExtractMetadata(token string) (*AuthData, error) {
+func ExtractMetadata(token string) (tokenKey string, authData *AuthData, err error) {
 	jwt := newJWTHelper()
 	metadata, err := jwt.Extract(token)
 	if err != nil {
-		return nil, err
+		return "", nil, err
 	}
 
-	var authData AuthData
 	err = mapstructure.Decode(metadata, &authData)
 	if err != nil {
-		return nil, err
+		return "", nil, err
 	}
 
-	return &authData, nil
+	tokenKey = metadata["token_key"].(string)
+	return
 }

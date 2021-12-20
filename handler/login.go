@@ -1,0 +1,28 @@
+package handler
+
+import (
+	"github.com/gin-gonic/gin"
+	"selling-management-be/defined"
+	"selling-management-be/pkg/app"
+	"selling-management-be/pkg/logger"
+	"selling-management-be/service"
+)
+
+func Login() gin.HandlerFunc{
+	return func(ctx *gin.Context) {
+		var request service.LoginRequest
+		if err := ctx.ShouldBindJSON(&request); err != nil {
+			app.Response(ctx, 400, "Bad request", nil)
+			return
+		}
+
+		reply, err := service.Login(&request)
+		if err != nil {
+			logger.Log().Error(defined.AuthDomain, "service.Login", err)
+			app.Response(ctx, 500, err.Error(), nil)
+			return
+		}
+
+		app.Response(ctx, 200, "OK", reply)
+	}
+}

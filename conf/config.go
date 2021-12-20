@@ -23,6 +23,8 @@ func init() {
 }
 
 type Config struct {
+	AppPort string
+
 	SecurityAccessSecret string
 	SecurityExpiry       time.Duration
 	SecurityTLL          bool
@@ -33,16 +35,36 @@ type Config struct {
 	DatabaseDBName    string
 	DatabasePort      string
 	DatabaseMigration bool
+
+	DefaultUsername    string
+	DefaultPassword    string
+	DefaultEmail       string
+	DefaultRole        string
+	DefaultFirstName   string
+	DefaultLastName    string
+	DefaultPhoneNumber string
+	DefaultAddress     string
 }
 
 func (cfg *Config) reloadConfig() {
-	cfg.SecurityAccessSecret = os.Getenv(SecurityAccessSecret)
-	cfg.SecurityExpiry, _ = time.ParseDuration(os.Getenv(SecurityExpiryDuration))
+	cfg.AppPort = os.Getenv(appPort)
 
-	cfg.DatabaseHost = os.Getenv(DatabaseHost)
-	cfg.DatabaseUser = os.Getenv(DatabaseUser)
-	cfg.DatabasePassword = os.Getenv(DatabasePassword)
-	cfg.DatabaseDBName = os.Getenv(DatabaseDBName)
-	cfg.DatabasePort = os.Getenv(DatabasePort)
-	cfg.DatabaseMigration, _ = strconv.ParseBool(os.Getenv(DatabaseMigration))
+	cfg.SecurityAccessSecret = os.Getenv(securityAccessSecret)
+	cfg.SecurityExpiry, _ = time.ParseDuration(os.Getenv(securityExpiryDuration))
+
+	cfg.DatabaseHost = os.Getenv(databaseHost)
+	cfg.DatabaseUser = os.Getenv(databaseUser)
+	cfg.DatabasePassword = os.Getenv(databasePassword)
+	cfg.DatabaseDBName = os.Getenv(databaseDBName)
+	cfg.DatabasePort = os.Getenv(databasePort)
+	cfg.DatabaseMigration, _ = strconv.ParseBool(os.Getenv(databaseMigration))
+
+	cfg.DefaultUsername = os.Getenv(defaultUsername)
+	cfg.DefaultPassword = os.Getenv(defaultPassword)
+	cfg.DefaultEmail = os.Getenv(defaultEmail)
+	cfg.DefaultRole = os.Getenv(defaultRole)
+	cfg.DefaultFirstName = os.Getenv(defaultFirstName)
+	cfg.DefaultLastName = os.Getenv(defaultLastName)
+	cfg.DefaultPhoneNumber = os.Getenv(defaultPhoneNumber)
+	cfg.DefaultAddress = os.Getenv(defaultAddress)
 }
