@@ -8,17 +8,18 @@ import (
 )
 
 type UserCreateRequest struct {
-	ID          string    `json:"id"`
-	FirstName   string    `json:"first_name"`
-	LastName    string    `json:"last_name"`
-	PhoneNumber string    `json:"phone_number"`
-	Address     string    `json:"address"`
-	Email       string    `json:"email"`
-	Username    string    `json:"username"`
-	Password    string    `json:"-"`
-	Role        string    `json:"role"`
-	LoginTime   time.Time `json:"login_time"`
-	Status      string    `json:"status"`
+	ID             string    `json:"id"`
+	FirstName      string    `json:"first_name"`
+	LastName       string    `json:"last_name"`
+	PhoneNumber    string    `json:"phone_number"`
+	Address        string    `json:"address"`
+	Email          string    `json:"email"`
+	Username       string    `json:"username"`
+	Password       string    `json:"-"`
+	Role           string    `json:"role"`
+	LoginTime      time.Time `json:"login_time"`
+	Status         string    `json:"status"`
+	OrganizationID string    `json:"organization_id"`
 
 	UpdatedBy string    `json:"updated_by"`
 	UpdatedAt time.Time `json:"updated_at"`

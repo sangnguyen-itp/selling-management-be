@@ -16,11 +16,13 @@ type User struct {
 	Email       string `json:"email"`
 	Address     string `json:"address"`
 
-	Username  string    `json:"username"`
-	Password  string    `json:"password"`
-	Role      string    `json:"role"`
-	LoginTime time.Time `json:"login_time"`
-	Status    string    `json:"status"`
+	Username       string    `json:"username"`
+	Password       string    `json:"password"`
+	Role           string    `json:"role"`
+	LoginTime      time.Time `json:"login_time"`
+	Status         string    `json:"status"`
+	IsSystem       bool      `json:"is_system"`
+	OrganizationID string    `json:"organization_id" gorm:"index:idx_user_organization"`
 
 	UpdatedBy string    `json:"updated_by"`
 	UpdatedAt time.Time `json:"updated_at"`

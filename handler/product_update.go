@@ -29,6 +29,9 @@ func ProductUpdate() gin.HandlerFunc {
 		}
 
 		actor := context.NewBase(ctx)
+		if !actor.IsSystem {
+			request.OrganizationID = actor.OrganizationID
+		}
 		request.UpdatedAt = actor.UpdateTime
 		request.UpdatedBy = actor.UserID
 

@@ -6,10 +6,11 @@ import (
 )
 
 type UserListRequest struct {
-	Ids       []string `json:"ids"`
-	Usernames []string `json:"usernames"`
-	Status    string   `json:"status"`
-	Keyword   string   `json:"keyword"`
+	Ids             []string `json:"ids"`
+	OrganizationIds []string `json:"organization_ids"`
+	Usernames       []string `json:"usernames"`
+	Status          string   `json:"status"`
+	Keyword         string   `json:"keyword"`
 	helper.Pagination
 }
 
@@ -17,6 +18,10 @@ func UserList(request *UserListRequest) (reply []*UserGetReply, err error) {
 	sql := mainService.db
 	if len(request.Ids) > 0 {
 		sql = sql.Where("id IN (?)", request.Ids)
+	}
+
+	if len(request.OrganizationIds) > 0 {
+		sql = sql.Where("organization_id IN (?)", request.OrganizationIds)
 	}
 
 	if len(request.Usernames) > 0 {
@@ -28,12 +33,12 @@ func UserList(request *UserListRequest) (reply []*UserGetReply, err error) {
 	}
 
 	if len(request.Keyword) > 0 {
-		sql = sql.Where("email ILIKE ?", "%" + request.Keyword + "%")
+		sql = sql.Where("email ILIKE ?", "%"+request.Keyword+"%")
 	}
 
 	sql = sql.Offset(request.Limit * request.Page).
-			Limit(request.Limit).
-			Order("id DESC")
+		Limit(request.Limit).
+		Order("id DESC")
 
 	var users []*model.User
 	if err = sql.Find(&users).Error; err != nil {

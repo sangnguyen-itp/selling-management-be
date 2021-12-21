@@ -33,6 +33,15 @@ func ProductCreate() gin.HandlerFunc {
 		request.CreatedBy = actor.UserID
 		request.UpdatedAt = actor.UpdateTime
 		request.UpdatedBy = actor.UserID
+		if !actor.IsSystem {
+			request.OrganizationID = actor.OrganizationID
+		} else {
+			if !ValidateOrganizationID(request.OrganizationID) {
+				logger.Log().Error(domain.OrganizationDomain, "ValidateOrganizationID", nil)
+				app.Response(ctx, 400, error_code.ErrorRequest, nil)
+				return
+			}
+		}
 
 		reply, err := service.ProductCreate(&request)
 		if err != nil {

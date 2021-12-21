@@ -31,6 +31,7 @@ func NewService() error {
 
 func (s *Service) MigrationSchema() error {
 	return s.db.AutoMigrate(
+		&model.Organization{},
 		&model.User{},
 		&model.Product{})
 }

@@ -9,7 +9,9 @@ import (
 )
 
 type AuthData struct {
-	UserID   string `json:"user_id"`
+	UserID         string `json:"user_id"`
+	OrganizationID string `json:"organization_id"`
+	IsSystem       bool   `json:"is_system"`
 }
 
 type Metadata map[string]interface{}

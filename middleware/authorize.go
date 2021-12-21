@@ -51,7 +51,7 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		context.SetActorHeader(ctx, user.ID, user.Role)
+		context.SetActorHeader(ctx, user.ID, user.OrganizationID, user.IsSystem)
 		ctx.Next()
 	}
 }

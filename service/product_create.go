@@ -11,15 +11,16 @@ import (
 )
 
 type ProductCreateRequest struct {
-	Name      string          `json:"name"`
-	Code      string          `json:"code"`
-	Price     decimal.Decimal `json:"price"`
-	Currency  string          `json:"currency"`
-	Status    string          `json:"status"`
-	UpdatedBy string          `json:"-"`
-	UpdatedAt time.Time       `json:"-"`
-	CreatedBy string          `json:"-"`
-	CreatedAt time.Time       `json:"-"`
+	Name           string          `json:"name"`
+	Code           string          `json:"code"`
+	Price          decimal.Decimal `json:"price"`
+	Currency       string          `json:"currency"`
+	Status         string          `json:"status"`
+	OrganizationID string          `json:"organization_id"`
+	UpdatedBy      string          `json:"-"`
+	UpdatedAt      time.Time       `json:"-"`
+	CreatedBy      string          `json:"-"`
+	CreatedAt      time.Time       `json:"-"`
 }
 
 type ProductCreateReply struct {

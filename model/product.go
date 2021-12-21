@@ -12,13 +12,14 @@ import (
 )
 
 type Product struct {
-	ID         string          `gorm:"primaryKey"`
-	Code       string          `json:"code" gorm:"index:idx_code,unique"`
-	Name       string          `json:"name"`
-	SearchName string          `json:"search_name" gorm:"index:idx_search_name"`
-	Price      decimal.Decimal `json:"price" gorm:"type:decimal(20,8);"`
-	Currency   string          `json:"currency"`
-	Status     string          `json:"status"`
+	ID             string          `gorm:"primaryKey"`
+	Code           string          `json:"code" gorm:"index:idx_code,unique"`
+	Name           string          `json:"name"`
+	SearchName     string          `json:"search_name" gorm:"index:idx_search_name"`
+	Price          decimal.Decimal `json:"price" gorm:"type:decimal(20,8);"`
+	Currency       string          `json:"currency"`
+	Status         string          `json:"status"`
+	OrganizationID string          `json:"organization_id" gorm:"index:idx_product_organization"`
 
 	UpdatedBy string    `json:"updated_by"`
 	UpdatedAt time.Time `json:"updated_at"`

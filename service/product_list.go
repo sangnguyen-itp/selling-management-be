@@ -7,9 +7,10 @@ import (
 )
 
 type ProductListRequest struct {
-	Ids     []string `json:"ids"`
-	Status  string   `json:"status"`
-	Keyword string   `json:"keyword"`
+	Ids             []string `json:"ids"`
+	OrganizationIds []string `json:"organization_ids"`
+	Status          string   `json:"status"`
+	Keyword         string   `json:"keyword"`
 	helper.Pagination
 }
 
@@ -17,6 +18,10 @@ func ProductList(request *ProductListRequest) (reply []*ProductGetReply, err err
 	sql := mainService.db
 	if len(request.Ids) > 0 {
 		sql = sql.Where("id IN (?)", request.Ids)
+	}
+
+	if len(request.OrganizationIds) > 0 {
+		sql = sql.Where("organization_id IN (?)", request.OrganizationIds)
 	}
 
 	if len(request.Status) > 0 {

@@ -9,14 +9,16 @@ import (
 )
 
 type ProductUpdateRequest struct {
-	ID        string          `json:"id"`
-	Code      string          `json:"code"`
-	Name      string          `json:"name"`
-	Price     decimal.Decimal `json:"price"`
-	Currency  string          `json:"currency"`
-	Status    string          `json:"status"`
-	UpdatedBy string          `json:"-"`
-	UpdatedAt time.Time       `json:"-"`
+	ID       string          `json:"id"`
+	Code     string          `json:"code"`
+	Name     string          `json:"name"`
+	Price    decimal.Decimal `json:"price"`
+	Currency string          `json:"currency"`
+	Status   string          `json:"status"`
+
+	OrganizationID string    `json:"-"`
+	UpdatedBy      string    `json:"-"`
+	UpdatedAt      time.Time `json:"-"`
 }
 
 type ProductUpdateReply struct {
@@ -29,8 +31,13 @@ func ProductUpdate(request *ProductUpdateRequest) (reply *ProductUpdateReply, er
 		return nil, err
 	}
 
+	sqlDB := mainService.db.Model(&product)
+	if len(request.OrganizationID) > 0 {
+		sqlDB = sqlDB.Where("organization_id = ?", request.OrganizationID)
+	}
+
 	productUpdateData := getProductUpdateDataMap(request)
-	if err = mainService.db.Model(&product).Select(allowZero()).Updates(productUpdateData).Error; err != nil {
+	if err = sqlDB.Select(allowZero()).Updates(productUpdateData).Error; err != nil {
 		return nil, err
 	}
 
@@ -43,7 +50,8 @@ func allowZero() string {
 	return strings.Join(allowCols, ",")
 }
 
-func getProductUpdateDataMap(request *ProductUpdateRequest) (data map[string]interface{}) {
+func getProductUpdateDataMap(request *ProductUpdateRequest) map[string]interface{} {
+	data := make(map[string]interface{})
 	if len(request.Code) > 0 {
 		data["code"] = request.Code
 	}
@@ -64,5 +72,5 @@ func getProductUpdateDataMap(request *ProductUpdateRequest) (data map[string]int
 		data["status"] = request.Status
 	}
 
-	return
+	return data
 }

@@ -2,6 +2,7 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
+	"selling-management-be/context"
 	"selling-management-be/defined/domain"
 	"selling-management-be/defined/error_code"
 	"selling-management-be/pkg/app"
@@ -25,6 +26,11 @@ func ProductList() gin.HandlerFunc {
 		if err := ctx.ShouldBindJSON(&request); err != nil {
 			app.Response(ctx, 400, error_code.ErrorRequest, nil)
 			return
+		}
+
+		actor := context.NewBase(ctx)
+		if !actor.IsSystem {
+			request.OrganizationIds = append(request.OrganizationIds, actor.OrganizationID)
 		}
 
 		reply, err := service.ProductList(&request)

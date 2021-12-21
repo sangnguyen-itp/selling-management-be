@@ -23,7 +23,7 @@ func Run() {
 
 	route.Static("/public", "./public")
 
-	route.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	route.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	root := route.Group("/api")
 
 	auth := root.Group("/auth")
@@ -32,10 +32,9 @@ func Run() {
 		auth.POST("/forgot-password")
 	}
 
-
 	v1 := root.Group("/v1")
 	{
-		v1.Use(middleware.AuthMiddleware(), middleware.ActorMiddleware())
+		v1.Use(middleware.AuthMiddleware())
 		user := v1.Group("/user")
 		{
 			user.POST("/get", handler.UserGet())

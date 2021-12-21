@@ -7,7 +7,8 @@ import (
 )
 
 type ProductGetRequest struct {
-	ID string `json:"id"`
+	ID             string `json:"id"`
+	OrganizationID string `json:"-"`
 }
 
 type ProductGetReply struct {
@@ -20,7 +21,13 @@ type ProductGetReply struct {
 
 func ProductGet(request *ProductGetRequest) (reply *ProductGetReply, err error) {
 	var product model.Product
-	if err = mainService.db.First(&product, "id = ?", request.ID).Error; err != nil {
+
+	sqlDB := mainService.db
+	if len(request.OrganizationID) > 0 {
+		sqlDB = sqlDB.Where("organization_id = ?", request.OrganizationID)
+	}
+
+	if err = sqlDB.First(&product, "id = ?", request.ID).Error; err != nil {
 		return nil, err
 	}
 	reply, err = toProductGetReply(&product)

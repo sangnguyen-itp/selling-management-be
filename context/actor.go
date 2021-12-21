@@ -6,16 +6,20 @@ import (
 )
 
 type Actor struct {
-	IP         string
-	UserID     string
-	UpdateTime time.Time
+	IP             string
+	UserID         string
+	OrganizationID string
+	IsSystem       bool
+	UpdateTime     time.Time
 }
 
 func NewBase(ctx *gin.Context) *Actor {
-	userID := GetActorHeader(ctx)
+	userID, orgID, isSystem := GetActorHeader(ctx)
 	return &Actor{
-		UserID: userID,
-		IP: ctx.ClientIP(),
-		UpdateTime: time.Now(),
+		UserID:         userID,
+		IP:             ctx.ClientIP(),
+		UpdateTime:     time.Now(),
+		OrganizationID: orgID,
+		IsSystem:       isSystem,
 	}
 }

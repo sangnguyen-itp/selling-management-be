@@ -12,22 +12,24 @@ import (
 func main() {
 	service.NewService()
 	id := "user-121ee30d-972c-477b-ac58-91b4efa6c479"
+	organizationID := "organization-121ee30d-972c-477b-ac58-91b4efa6c479"
 	_, err := service.UserCreate(&service.UserCreateRequest{
-		ID:          id,
-		FirstName:   conf.EnvConfig.DefaultFirstName,
-		LastName:    conf.EnvConfig.DefaultLastName,
-		Email:       conf.EnvConfig.DefaultEmail,
-		PhoneNumber: conf.EnvConfig.DefaultPhoneNumber,
-		Address:     conf.EnvConfig.DefaultAddress,
-		Username:    conf.EnvConfig.DefaultUsername,
-		Password:    conf.EnvConfig.DefaultPassword,
-		Role:        conf.EnvConfig.DefaultRole,
-		LoginTime:   time.Now(),
-		Status:      user_status.Active,
-		UpdatedBy:   "system",
-		CreatedBy:   "system",
-		UpdatedAt:   time.Now(),
-		CreatedAt:   time.Now(),
+		ID:             id,
+		FirstName:      conf.EnvConfig.DefaultFirstName,
+		LastName:       conf.EnvConfig.DefaultLastName,
+		Email:          conf.EnvConfig.DefaultEmail,
+		PhoneNumber:    conf.EnvConfig.DefaultPhoneNumber,
+		Address:        conf.EnvConfig.DefaultAddress,
+		Username:       conf.EnvConfig.DefaultUsername,
+		Password:       conf.EnvConfig.DefaultPassword,
+		Role:           conf.EnvConfig.DefaultRole,
+		OrganizationID: organizationID,
+		LoginTime:      time.Now(),
+		Status:         user_status.Active,
+		UpdatedBy:      "system",
+		CreatedBy:      "system",
+		UpdatedAt:      time.Now(),
+		CreatedAt:      time.Now(),
 	})
 	if err != nil {
 		logger.Log().Error(domain.UserDomain, "service.UserCreate", err)

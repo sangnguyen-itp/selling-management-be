@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/gin-gonic/gin"
 	"selling-management-be/defined/error_code"
+	"strconv"
 	"strings"
 )
 
@@ -21,12 +22,16 @@ func GetClientIP(ctx *gin.Context) string {
 	return ctx.ClientIP()
 }
 
-func SetActorHeader(ctx *gin.Context, userID, role string) {
+func SetActorHeader(ctx *gin.Context, userID, organizationID string, isSystem bool) {
 	ctx.Request.Header.Set("user_id", userID)
+	ctx.Request.Header.Set("organization_id", organizationID)
+	ctx.Request.Header.Set("is_system", strconv.FormatBool(isSystem))
 }
 
-func GetActorHeader(ctx *gin.Context) (userID string) {
+func GetActorHeader(ctx *gin.Context) (userID, organizationID string, isSystem bool) {
 	userID = ctx.Request.Header.Get("user_id")
+	organizationID = ctx.Request.Header.Get("organization_id")
+	isSystem, _ = strconv.ParseBool(ctx.Request.Header.Get("is_system"))
 	return
 }
 
