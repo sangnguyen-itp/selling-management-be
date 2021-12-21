@@ -4,7 +4,7 @@ import (
 	"errors"
 	"github.com/fatih/structs"
 	"github.com/mitchellh/mapstructure"
-	"selling-management-be/defined"
+	"selling-management-be/defined/domain"
 	"selling-management-be/pkg/generate_id"
 )
 
@@ -26,7 +26,7 @@ func Generate(authData *AuthData) (*Token, error) {
 	}
 
 	jwt := newJWTHelper()
-	tokenKey := generate_id.NewID(defined.TokenDomain)
+	tokenKey := generate_id.NewID(domain.TokenDomain)
 	metadata := structs.Map(authData)
 	metadata["token_key"] = tokenKey
 

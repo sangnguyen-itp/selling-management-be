@@ -5,7 +5,7 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"selling-management-be/conf"
-	"selling-management-be/defined"
+	"selling-management-be/defined/domain"
 	"selling-management-be/pkg/logger"
 )
 
@@ -20,7 +20,7 @@ func ConnectDB() *gorm.DB {
 		DisableForeignKeyConstraintWhenMigrating: true,
 	})
 	if err != nil {
-		logger.Log().Error(defined.SystemDomain, "gorm.Open", err)
+		logger.Log().Error(domain.SystemDomain, "gorm.Open", err)
 		panic(err)
 	}
 

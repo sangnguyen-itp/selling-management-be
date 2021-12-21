@@ -24,7 +24,7 @@ type UserGetReply struct {
 	Status    string    `json:"status"`
 }
 
-func GetUser(request *UserGetRequest) (reply *UserGetReply, err error) {
+func UserGet(request *UserGetRequest) (reply *UserGetReply, err error) {
 	var user model.User
 	if err = mainService.db.First(&user, "id = ?", request.ID).Error; err != nil {
 		return nil, err

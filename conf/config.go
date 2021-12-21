@@ -3,7 +3,7 @@ package conf
 import (
 	"github.com/joho/godotenv"
 	"os"
-	"selling-management-be/defined"
+	"selling-management-be/defined/domain"
 	"selling-management-be/pkg/logger"
 	"strconv"
 	"time"
@@ -13,7 +13,7 @@ var EnvConfig *Config
 
 func init() {
 	if err := godotenv.Load(); err != nil {
-		logger.Log().Error(defined.SystemDomain, "godotenv.Load", err)
+		logger.Log().Error(domain.SystemDomain, "godotenv.Load", err)
 		panic(err)
 	}
 

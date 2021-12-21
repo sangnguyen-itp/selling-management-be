@@ -2,7 +2,8 @@ package main
 
 import (
 	"selling-management-be/conf"
-	"selling-management-be/defined"
+	"selling-management-be/defined/domain"
+	"selling-management-be/defined/user_status"
 	"selling-management-be/pkg/logger"
 	"selling-management-be/service"
 	"time"
@@ -22,14 +23,14 @@ func main() {
 		Password:    conf.EnvConfig.DefaultPassword,
 		Role:        conf.EnvConfig.DefaultRole,
 		LoginTime:   time.Now(),
-		Status:      defined.Active,
+		Status:      user_status.Active,
 		UpdatedBy:   "system",
 		CreatedBy:   "system",
 		UpdatedAt:   time.Now(),
 		CreatedAt:   time.Now(),
 	})
 	if err != nil {
-		logger.Log().Error(defined.UserDomain, "service.UserCreate", err)
+		logger.Log().Error(domain.UserDomain, "service.UserCreate", err)
 		return
 	}
 }

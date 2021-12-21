@@ -2,12 +2,21 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
-	"selling-management-be/defined"
+	"selling-management-be/defined/domain"
 	"selling-management-be/pkg/app"
 	"selling-management-be/pkg/logger"
 	"selling-management-be/service"
 )
 
+// Login docs
+// @Summary      Login
+// @Description  /api/auth/login
+// @Tags         Auth
+// @Accept       json
+// @Produce      json
+// @Param   	 body  body   service.LoginRequest  true "body"
+// @Success      200  {object}  service.LoginReply
+// @Router       /auth/login [post]
 func Login() gin.HandlerFunc{
 	return func(ctx *gin.Context) {
 		var request service.LoginRequest
@@ -18,7 +27,7 @@ func Login() gin.HandlerFunc{
 
 		reply, err := service.Login(&request)
 		if err != nil {
-			logger.Log().Error(defined.AuthDomain, "service.Login", err)
+			logger.Log().Error(domain.AuthDomain, "service.Login", err)
 			app.Response(ctx, 500, err.Error(), nil)
 			return
 		}

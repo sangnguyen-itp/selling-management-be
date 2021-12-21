@@ -1,8 +1,8 @@
 package helper
 
 type Pagination struct {
-	Limit int
-	Page  int
+	Limit int `json:"limit"`
+	Page  int `json:"page"`
 }
 
 

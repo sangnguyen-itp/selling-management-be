@@ -9,27 +9,27 @@ import (
 	"selling-management-be/service"
 )
 
-// UserList docs
-// @Summary      UserList
-// @Description  /api/v1/user/get
-// @Tags         User
+// ProductList docs
+// @Summary      ProductList
+// @Description  /api/v1/product/list
+// @Tags         Product
 // @Accept       json
 // @Produce      json
-// @Param   	 body  body   service.UserListRequest  true "body"
-// @Success      201  {object}  []service.UserGetReply
+// @Param   	 body  body   service.ProductListRequest  true "body"
+// @Success      201  {object}  []service.ProductGetReply
 // @Security     ApiKeyAuth
-// @Router       /v1/user/list [post]
-func UserList() gin.HandlerFunc {
+// @Router       /v1/product/list [post]
+func ProductList() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		var request service.UserListRequest
+		var request service.ProductListRequest
 		if err := ctx.ShouldBindJSON(&request); err != nil {
 			app.Response(ctx, 400, error_code.ErrorRequest, nil)
 			return
 		}
 
-		reply, err := service.UserList(&request)
+		reply, err := service.ProductList(&request)
 		if err != nil {
-			logger.Log().Error(domain.UserDomain, "service.UserList", err)
+			logger.Log().Error(domain.ProductDomain, "service.UserList", err)
 			app.Response(ctx, 500, error_code.ServiceError, nil)
 			return
 		}
@@ -37,3 +37,4 @@ func UserList() gin.HandlerFunc {
 		app.Response(ctx, 200, "OK", reply)
 	}
 }
+

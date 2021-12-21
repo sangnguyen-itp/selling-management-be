@@ -3,7 +3,7 @@ package service
 import (
 	"gorm.io/gorm"
 	"selling-management-be/conf"
-	"selling-management-be/defined"
+	"selling-management-be/defined/domain"
 	"selling-management-be/model"
 	"selling-management-be/pkg/database"
 	"selling-management-be/pkg/logger"
@@ -23,12 +23,14 @@ func NewService() error {
 	_db := database.ConnectDB()
 	mainService = &Service{db: _db}
 	if conf.EnvConfig.DatabaseMigration {
-		logger.Log().Info(defined.SystemDomain, "MigrationSchema")
+		logger.Log().Info(domain.SystemDomain, "MigrationSchema")
 		mainService.MigrationSchema()
 	}
 	return nil
 }
 
 func (s *Service) MigrationSchema() error {
-	return s.db.AutoMigrate(&model.User{})
+	return s.db.AutoMigrate(
+		&model.User{},
+		&model.Product{})
 }
