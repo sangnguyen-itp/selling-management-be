@@ -20,11 +20,11 @@ type UserCreateRequest struct {
 	LoginTime      time.Time `json:"login_time"`
 	Status         string    `json:"status"`
 	OrganizationID string    `json:"organization_id"`
-
-	UpdatedBy string    `json:"updated_by"`
-	UpdatedAt time.Time `json:"updated_at"`
-	CreatedBy string    `json:"created_by"`
-	CreatedAt time.Time `json:"created_at"`
+	IsSystem       bool      `json:"is_system"`
+	UpdatedBy      string    `json:"updated_by"`
+	UpdatedAt      time.Time `json:"updated_at"`
+	CreatedBy      string    `json:"created_by"`
+	CreatedAt      time.Time `json:"created_at"`
 }
 
 type UserCreateReply struct {

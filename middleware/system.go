@@ -26,6 +26,7 @@ func SystemMiddleware() gin.HandlerFunc {
 			return
 		}
 
+		context.SetIsSystem(ctx, isSystem)
 		ctx.Next()
 	}
 }

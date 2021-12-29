@@ -16,7 +16,7 @@ type User struct {
 	Email       string `json:"email"`
 	Address     string `json:"address"`
 
-	Username       string    `json:"username"`
+	Username       string    `json:"username" gorm:"index:idx_username,unique"`
 	Password       string    `json:"password"`
 	Role           string    `json:"role"`
 	LoginTime      time.Time `json:"login_time"`
