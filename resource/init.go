@@ -1,4 +1,4 @@
-package init
+package resource
 
 func InitDefaultData()  {
 	initSystemData()

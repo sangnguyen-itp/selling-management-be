@@ -3,8 +3,8 @@ package main
 import (
 	"selling-management-be/defined/domain"
 	"selling-management-be/docs"
-	"selling-management-be/init"
 	"selling-management-be/pkg/logger"
+	"selling-management-be/resource"
 	"selling-management-be/router"
 	"selling-management-be/service"
 )
@@ -35,7 +35,7 @@ func main() {
 	}
 
 	docs.SetupSwaggerInfo()
-	init.InitDefaultData()
+	resource.InitDefaultData()
 
 	router.Run()
 }
