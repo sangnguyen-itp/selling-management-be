@@ -25,6 +25,7 @@ func initSystemData() {
 		OrganizationID: organizationID,
 		LoginTime:      time.Now(),
 		Status:         user_status.Active,
+		IsSystem:       true,
 		UpdatedBy:      "system",
 		CreatedBy:      "system",
 		UpdatedAt:      time.Now(),

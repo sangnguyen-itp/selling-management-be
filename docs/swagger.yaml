@@ -12,6 +12,22 @@ definitions:
       username:
         type: string
     type: object
+  service.OrganizationCreateReply:
+    properties:
+      id:
+        type: string
+    type: object
+  service.OrganizationCreateRequest:
+    properties:
+      address:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+    type: object
   service.OrganizationGetReply:
     properties:
       address:
@@ -58,9 +74,17 @@ definitions:
         type: string
       organization_id:
         type: string
-      price:
+      retail_price:
         type: number
+      retail_unit:
+        type: string
       status:
+        type: string
+      type:
+        type: string
+      wholesale_price:
+        type: number
+      wholesale_unit:
         type: string
     type: object
   service.ProductGetReply:
@@ -73,8 +97,22 @@ definitions:
         type: string
       name:
         type: string
-      price:
+      organization_id:
+        type: string
+      retail_price:
         type: number
+      retail_unit:
+        type: string
+      search_name:
+        type: string
+      status:
+        type: string
+      type:
+        type: string
+      wholesale_price:
+        type: number
+      wholesale_unit:
+        type: string
     type: object
   service.ProductGetRequest:
     properties:
@@ -83,6 +121,10 @@ definitions:
     type: object
   service.ProductListRequest:
     properties:
+      codes:
+        items:
+          type: string
+        type: array
       ids:
         items:
           type: string
@@ -115,9 +157,57 @@ definitions:
         type: string
       name:
         type: string
-      price:
+      retail_price:
         type: number
+      retail_unit:
+        type: string
       status:
+        type: string
+      type:
+        type: string
+      wholesale_price:
+        type: number
+      wholesale_unit:
+        type: string
+    type: object
+  service.UserCreateReply:
+    properties:
+      id:
+        type: string
+    type: object
+  service.UserCreateRequest:
+    properties:
+      address:
+        type: string
+      created_at:
+        type: string
+      created_by:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: string
+      is_system:
+        type: boolean
+      last_name:
+        type: string
+      login_time:
+        type: string
+      organization_id:
+        type: string
+      phone_number:
+        type: string
+      role:
+        type: string
+      status:
+        type: string
+      updated_at:
+        type: string
+      updated_by:
+        type: string
+      username:
         type: string
     type: object
   service.UserGetReply:
@@ -546,6 +636,30 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: ProductUpdate
+      tags:
+      - System
+  /v1/system/user/create:
+    post:
+      consumes:
+      - application/json
+      description: /api/v1/system/user/create
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/service.UserCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/service.UserCreateReply'
+      security:
+      - ApiKeyAuth: []
+      summary: UserCreate
       tags:
       - System
   /v1/system/user/get:

@@ -616,6 +616,45 @@ var doc = `{
                 }
             }
         },
+        "/v1/system/user/create": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "/api/v1/system/user/create",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "System"
+                ],
+                "summary": "UserCreate",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/service.UserCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/service.UserCreateReply"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/system/user/get": {
             "post": {
                 "security": [
@@ -718,6 +757,31 @@ var doc = `{
                 }
             }
         },
+        "service.OrganizationCreateReply": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "service.OrganizationCreateRequest": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                }
+            }
+        },
         "service.OrganizationGetReply": {
             "type": "object",
             "properties": {
@@ -789,10 +853,22 @@ var doc = `{
                 "organization_id": {
                     "type": "string"
                 },
-                "price": {
+                "retail_price": {
                     "type": "number"
                 },
+                "retail_unit": {
+                    "type": "string"
+                },
                 "status": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "wholesale_price": {
+                    "type": "number"
+                },
+                "wholesale_unit": {
                     "type": "string"
                 }
             }
@@ -812,8 +888,29 @@ var doc = `{
                 "name": {
                     "type": "string"
                 },
-                "price": {
+                "organization_id": {
+                    "type": "string"
+                },
+                "retail_price": {
                     "type": "number"
+                },
+                "retail_unit": {
+                    "type": "string"
+                },
+                "search_name": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "wholesale_price": {
+                    "type": "number"
+                },
+                "wholesale_unit": {
+                    "type": "string"
                 }
             }
         },
@@ -828,6 +925,12 @@ var doc = `{
         "service.ProductListRequest": {
             "type": "object",
             "properties": {
+                "codes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "ids": {
                     "type": "array",
                     "items": {
@@ -877,10 +980,83 @@ var doc = `{
                 "name": {
                     "type": "string"
                 },
-                "price": {
+                "retail_price": {
                     "type": "number"
                 },
+                "retail_unit": {
+                    "type": "string"
+                },
                 "status": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "wholesale_price": {
+                    "type": "number"
+                },
+                "wholesale_unit": {
+                    "type": "string"
+                }
+            }
+        },
+        "service.UserCreateReply": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "service.UserCreateRequest": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "created_by": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "is_system": {
+                    "type": "boolean"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "login_time": {
+                    "type": "string"
+                },
+                "organization_id": {
+                    "type": "string"
+                },
+                "phone_number": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "updated_by": {
+                    "type": "string"
+                },
+                "username": {
                     "type": "string"
                 }
             }

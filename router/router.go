@@ -63,22 +63,24 @@ func Run() {
 
 		systemEndpoint := v1.Group("/system")
 		{
-			clientEndpoint.Use(middleware.SystemMiddleware())
+			systemEndpoint.Use(middleware.SystemMiddleware())
 			user := systemEndpoint.Group("/user")
 			{
 				user.POST("/get", system.UserGet())
-				user.POST("/list", client.UserList())
+				user.POST("/list", system.UserList())
+				user.POST("/create", system.UserCreate())
 			}
 
 			organization := systemEndpoint.Group("/organization")
 			{
 				organization.POST("/get", system.OrganizationGet())
 				organization.POST("/list", system.OrganizationList())
+				organization.POST("/create", system.OrganizationCreate())
 			}
 
 			product := systemEndpoint.Group("/product")
 			{
-				product.POST("/get", client.ProductGet())
+				product.POST("/get", system.ProductGet())
 				product.POST("/list", system.ProductList())
 				product.POST("/create", system.ProductCreate())
 				product.POST("/update", system.ProductUpdate())
