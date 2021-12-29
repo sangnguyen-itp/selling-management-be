@@ -14,7 +14,6 @@ services:
     container_name: postgresql
     restart: always
     environment:
-      POSTGRES_USER: smu
       POSTGRES_PASSWORD: S@ng29031998
       POSTGRES_DB: selling-management
     ports:
