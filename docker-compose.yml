@@ -16,5 +16,6 @@ services:
     environment:
       POSTGRES_USER: smu
       POSTGRES_PASSWORD: S@ng29031998
+      POSTGRES_DB: selling-management
     ports:
       - "5432:5432"
