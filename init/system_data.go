@@ -1,4 +1,4 @@
-package main
+package init
 
 import (
 	"selling-management-be/conf"
@@ -9,10 +9,9 @@ import (
 	"time"
 )
 
-func main() {
-	service.NewService()
+func initSystemData() {
 	id := "user-121ee30d-972c-477b-ac58-91b4efa6c479"
-	organizationID := "client-121ee30d-972c-477b-ac58-91b4efa6c479"
+	organizationID := "*"
 	_, err := service.UserCreate(&service.UserCreateRequest{
 		ID:             id,
 		FirstName:      conf.EnvConfig.DefaultFirstName,
