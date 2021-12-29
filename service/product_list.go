@@ -1,7 +1,7 @@
 package service
 
 import (
-	"selling-management-be/helper"
+	"selling-management-be/helper/pagination"
 	"selling-management-be/model"
 	"strings"
 )
@@ -11,7 +11,7 @@ type ProductListRequest struct {
 	OrganizationIds []string `json:"organization_ids"`
 	Status          string   `json:"status"`
 	Keyword         string   `json:"keyword"`
-	helper.Pagination
+	pagination.Pagination
 }
 
 func ProductList(request *ProductListRequest) (reply []*ProductGetReply, err error) {

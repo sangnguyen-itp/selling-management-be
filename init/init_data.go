@@ -12,7 +12,7 @@ import (
 func main() {
 	service.NewService()
 	id := "user-121ee30d-972c-477b-ac58-91b4efa6c479"
-	organizationID := "organization-121ee30d-972c-477b-ac58-91b4efa6c479"
+	organizationID := "client-121ee30d-972c-477b-ac58-91b4efa6c479"
 	_, err := service.UserCreate(&service.UserCreateRequest{
 		ID:             id,
 		FirstName:      conf.EnvConfig.DefaultFirstName,

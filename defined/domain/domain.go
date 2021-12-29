@@ -1,7 +1,7 @@
 package domain
 
 const (
-	OrganizationDomain = "organization"
+	OrganizationDomain = "client"
 	UserDomain         = "user"
 	ProductDomain      = "product"
 

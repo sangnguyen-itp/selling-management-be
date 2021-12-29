@@ -12,6 +12,37 @@ definitions:
       username:
         type: string
     type: object
+  service.OrganizationGetReply:
+    properties:
+      address:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+    type: object
+  service.OrganizationGetRequest:
+    properties:
+      id:
+        type: string
+    type: object
+  service.OrganizationListRequest:
+    properties:
+      ids:
+        items:
+          type: string
+        type: array
+      keyword:
+        type: string
+      limit:
+        type: integer
+      page:
+        type: integer
+      status:
+        type: string
+    type: object
   service.ProductCreateReply:
     properties:
       id:
@@ -24,6 +55,8 @@ definitions:
       currency:
         type: string
       name:
+        type: string
+      organization_id:
         type: string
       price:
         type: number
@@ -58,6 +91,10 @@ definitions:
         type: string
       limit:
         type: integer
+      organization_ids:
+        items:
+          type: string
+        type: array
       page:
         type: integer
       status:
@@ -91,9 +128,13 @@ definitions:
         type: string
       id:
         type: string
+      is_system:
+        type: boolean
       last_name:
         type: string
       login_time:
+        type: string
+      organization_id:
         type: string
       phone_number:
         type: string
@@ -119,6 +160,10 @@ definitions:
         type: string
       limit:
         type: integer
+      organization_ids:
+        items:
+          type: string
+        type: array
       page:
         type: integer
       status:
@@ -164,7 +209,248 @@ paths:
       summary: Login
       tags:
       - Auth
-  /v1/product/create:
+  /v1/client/organization/get:
+    post:
+      consumes:
+      - application/json
+      description: /api/v1/system/organization/get
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/service.OrganizationGetRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            items:
+              $ref: '#/definitions/service.OrganizationGetReply'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: OrganizationGet
+      tags:
+      - Client
+  /v1/client/product/create:
+    post:
+      consumes:
+      - application/json
+      description: /api/v1/client/product/create
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/service.ProductCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/service.ProductCreateReply'
+      security:
+      - ApiKeyAuth: []
+      summary: ProductCreate
+      tags:
+      - Client
+  /v1/client/product/get:
+    post:
+      consumes:
+      - application/json
+      description: /api/v1/client/product/get
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/service.ProductGetRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/service.ProductGetReply'
+      security:
+      - ApiKeyAuth: []
+      summary: ProductGet
+      tags:
+      - Client
+  /v1/client/product/import:
+    post:
+      consumes:
+      - application/json
+      description: /api/v1/client/product/get
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: ""
+      security:
+      - ApiKeyAuth: []
+      summary: ProductImport
+      tags:
+      - Client
+  /v1/client/product/list:
+    post:
+      consumes:
+      - application/json
+      description: /api/v1/client/product/list
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/service.ProductListRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            items:
+              $ref: '#/definitions/service.ProductGetReply'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: ProductList
+      tags:
+      - Client
+  /v1/client/product/update:
+    post:
+      consumes:
+      - application/json
+      description: /api/v1/client/product/update
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/service.ProductUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/service.ProductUpdateReply'
+      security:
+      - ApiKeyAuth: []
+      summary: ProductUpdate
+      tags:
+      - Client
+  /v1/client/user/get:
+    post:
+      consumes:
+      - application/json
+      description: /api/v1/user/get
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/service.UserGetRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/service.UserGetReply'
+      security:
+      - ApiKeyAuth: []
+      summary: UserGet
+      tags:
+      - Client
+  /v1/client/user/list:
+    post:
+      consumes:
+      - application/json
+      description: /api/v1/client/user/get
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/service.UserListRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            items:
+              $ref: '#/definitions/service.UserGetReply'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: UserList
+      tags:
+      - Client
+  /v1/system/organization/get:
+    post:
+      consumes:
+      - application/json
+      description: /api/v1/system/organization/get
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/service.OrganizationGetRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            items:
+              $ref: '#/definitions/service.OrganizationGetReply'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: OrganizationGet
+      tags:
+      - System
+  /v1/system/organization/list:
+    post:
+      consumes:
+      - application/json
+      description: /api/v1/system/organization/list
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/service.OrganizationListRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            items:
+              $ref: '#/definitions/service.OrganizationGetReply'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: OrganizationList
+      tags:
+      - System
+  /v1/system/product/create:
     post:
       consumes:
       - application/json
@@ -187,8 +473,8 @@ paths:
       - ApiKeyAuth: []
       summary: ProductCreate
       tags:
-      - Product
-  /v1/product/get:
+      - System
+  /v1/system/product/get:
     post:
       consumes:
       - application/json
@@ -211,8 +497,8 @@ paths:
       - ApiKeyAuth: []
       summary: ProductGet
       tags:
-      - Product
-  /v1/product/list:
+      - System
+  /v1/system/product/list:
     post:
       consumes:
       - application/json
@@ -237,8 +523,8 @@ paths:
       - ApiKeyAuth: []
       summary: ProductList
       tags:
-      - Product
-  /v1/product/update:
+      - System
+  /v1/system/product/update:
     post:
       consumes:
       - application/json
@@ -261,8 +547,8 @@ paths:
       - ApiKeyAuth: []
       summary: ProductUpdate
       tags:
-      - Product
-  /v1/user/get:
+      - System
+  /v1/system/user/get:
     post:
       consumes:
       - application/json
@@ -285,8 +571,8 @@ paths:
       - ApiKeyAuth: []
       summary: UserGet
       tags:
-      - User
-  /v1/user/list:
+      - System
+  /v1/system/user/list:
     post:
       consumes:
       - application/json
@@ -311,7 +597,7 @@ paths:
       - ApiKeyAuth: []
       summary: UserList
       tags:
-      - User
+      - System
 securityDefinitions:
   ApiKeyAuth:
     in: header

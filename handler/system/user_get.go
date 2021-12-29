@@ -1,8 +1,7 @@
-package handler
+package system
 
 import (
 	"github.com/gin-gonic/gin"
-	"selling-management-be/context"
 	"selling-management-be/defined/domain"
 	"selling-management-be/defined/error_code"
 	"selling-management-be/pkg/app"
@@ -13,24 +12,19 @@ import (
 // UserGet docs
 // @Summary      UserGet
 // @Description  /api/v1/user/get
-// @Tags         User
+// @Tags         System
 // @Accept       json
 // @Produce      json
 // @Param   	 body  body   service.UserGetRequest  true "body"
 // @Success      201  {object}  service.UserGetReply
 // @Security     ApiKeyAuth
-// @Router       /v1/user/get [post]
+// @Router       /v1/system/user/get [post]
 func UserGet() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var request service.UserGetRequest
 		if err := ctx.ShouldBindJSON(&request); err != nil {
 			app.Response(ctx, 400, error_code.ErrorRequest, nil)
 			return
-		}
-
-		actor := context.NewBase(ctx)
-		if !actor.IsSystem {
-			request.OrganizationID = actor.OrganizationID
 		}
 
 		reply, err := service.UserGet(&request)

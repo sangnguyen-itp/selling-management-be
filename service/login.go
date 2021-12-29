@@ -2,7 +2,7 @@ package service
 
 import (
 	"errors"
-	"selling-management-be/helper"
+	"selling-management-be/helper/pagination"
 	"selling-management-be/pkg/cipher"
 	"selling-management-be/pkg/token"
 )
@@ -19,7 +19,7 @@ type LoginReply struct {
 func Login(request *LoginRequest) (reply *LoginReply, err error) {
 	userList, err := UserList(&UserListRequest{
 		Usernames: []string{request.Username},
-		Pagination: helper.Pagination{
+		Pagination: pagination.Pagination{
 			Limit: 1,
 		},
 	})

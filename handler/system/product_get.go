@@ -1,4 +1,4 @@
-package handler
+package system
 
 import (
 	"github.com/gin-gonic/gin"
@@ -10,19 +10,19 @@ import (
 	"selling-management-be/service"
 )
 
-// ProductUpdate docs
-// @Summary      ProductUpdate
-// @Description  /api/v1/product/update
-// @Tags         Product
+// ProductGet docs
+// @Summary      ProductGet
+// @Description  /api/v1/product/get
+// @Tags         System
 // @Accept       json
 // @Produce      json
-// @Param   	 body  body   service.ProductUpdateRequest  true "body"
-// @Success      201  {object}  service.ProductUpdateReply
+// @Param   	 body  body   service.ProductGetRequest  true "body"
+// @Success      201  {object}  service.ProductGetReply
 // @Security     ApiKeyAuth
-// @Router       /v1/product/update [post]
-func ProductUpdate() gin.HandlerFunc {
+// @Router       /v1/system/product/get [post]
+func ProductGet() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		var request service.ProductUpdateRequest
+		var request service.ProductGetRequest
 		if err := ctx.ShouldBindJSON(&request); err != nil {
 			app.Response(ctx, 400, error_code.ErrorRequest, nil)
 			return
@@ -32,12 +32,10 @@ func ProductUpdate() gin.HandlerFunc {
 		if !actor.IsSystem {
 			request.OrganizationID = actor.OrganizationID
 		}
-		request.UpdatedAt = actor.UpdateTime
-		request.UpdatedBy = actor.UserID
 
-		reply, err := service.ProductUpdate(&request)
+		reply, err := service.ProductGet(&request)
 		if err != nil {
-			logger.Log().Error(domain.ProductDomain, "service.ProductUpdate", err)
+			logger.Log().Error(domain.ProductDomain, "service.ProductGet", err)
 			app.Response(ctx, 500, error_code.ServiceError, nil)
 			return
 		}

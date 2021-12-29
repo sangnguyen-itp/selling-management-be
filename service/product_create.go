@@ -4,7 +4,7 @@ import (
 	"github.com/mitchellh/mapstructure"
 	"github.com/shopspring/decimal"
 	"selling-management-be/defined/domain"
-	"selling-management-be/defined/user_status"
+	product_status "selling-management-be/defined/product_status"
 	"selling-management-be/model"
 	"selling-management-be/pkg/generate_id"
 	"time"
@@ -37,7 +37,7 @@ func ProductCreate(request *ProductCreateRequest) (reply *ProductCreateReply, er
 	product.ID = id
 	product.SearchName = product.Name
 	product.Price = request.Price
-	product.Status = user_status.Active
+	product.Status = product_status.Active
 
 	if err = mainService.db.Create(&product).Error; err != nil {
 		return nil, err

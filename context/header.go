@@ -22,6 +22,14 @@ func GetClientIP(ctx *gin.Context) string {
 	return ctx.ClientIP()
 }
 
+func GetIsSystem(ctx *gin.Context) string {
+	return ctx.Request.Header.Get("is_system")
+}
+
+func SetIsSystem(ctx *gin.Context, isSystem bool) {
+	ctx.Request.Header.Set("is_system", strconv.FormatBool(isSystem))
+}
+
 func SetActorHeader(ctx *gin.Context, userID, organizationID string, isSystem bool) {
 	ctx.Request.Header.Set("user_id", userID)
 	ctx.Request.Header.Set("organization_id", organizationID)

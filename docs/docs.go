@@ -66,14 +66,14 @@ var doc = `{
                 }
             }
         },
-        "/v1/product/create": {
+        "/v1/client/organization/get": {
             "post": {
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "/api/v1/product/create",
+                "description": "/api/v1/system/organization/get",
                 "consumes": [
                     "application/json"
                 ],
@@ -81,7 +81,49 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Product"
+                    "Client"
+                ],
+                "summary": "OrganizationGet",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/service.OrganizationGetRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/service.OrganizationGetReply"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/client/product/create": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "/api/v1/client/product/create",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Client"
                 ],
                 "summary": "ProductCreate",
                 "parameters": [
@@ -105,14 +147,14 @@ var doc = `{
                 }
             }
         },
-        "/v1/product/get": {
+        "/v1/client/product/get": {
             "post": {
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "/api/v1/product/get",
+                "description": "/api/v1/client/product/get",
                 "consumes": [
                     "application/json"
                 ],
@@ -120,7 +162,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Product"
+                    "Client"
                 ],
                 "summary": "ProductGet",
                 "parameters": [
@@ -144,14 +186,14 @@ var doc = `{
                 }
             }
         },
-        "/v1/product/list": {
+        "/v1/client/product/import": {
             "post": {
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "/api/v1/product/list",
+                "description": "/api/v1/client/product/get",
                 "consumes": [
                     "application/json"
                 ],
@@ -159,7 +201,32 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Product"
+                    "Client"
+                ],
+                "summary": "ProductImport",
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/v1/client/product/list": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "/api/v1/client/product/list",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Client"
                 ],
                 "summary": "ProductList",
                 "parameters": [
@@ -186,14 +253,14 @@ var doc = `{
                 }
             }
         },
-        "/v1/product/update": {
+        "/v1/client/product/update": {
             "post": {
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "/api/v1/product/update",
+                "description": "/api/v1/client/product/update",
                 "consumes": [
                     "application/json"
                 ],
@@ -201,7 +268,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Product"
+                    "Client"
                 ],
                 "summary": "ProductUpdate",
                 "parameters": [
@@ -225,7 +292,7 @@ var doc = `{
                 }
             }
         },
-        "/v1/user/get": {
+        "/v1/client/user/get": {
             "post": {
                 "security": [
                     {
@@ -240,7 +307,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "Client"
                 ],
                 "summary": "UserGet",
                 "parameters": [
@@ -264,7 +331,292 @@ var doc = `{
                 }
             }
         },
-        "/v1/user/list": {
+        "/v1/client/user/list": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "/api/v1/client/user/get",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Client"
+                ],
+                "summary": "UserList",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/service.UserListRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/service.UserGetReply"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/system/organization/get": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "/api/v1/system/organization/get",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "System"
+                ],
+                "summary": "OrganizationGet",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/service.OrganizationGetRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/service.OrganizationGetReply"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/system/organization/list": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "/api/v1/system/organization/list",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "System"
+                ],
+                "summary": "OrganizationList",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/service.OrganizationListRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/service.OrganizationGetReply"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/system/product/create": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "/api/v1/product/create",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "System"
+                ],
+                "summary": "ProductCreate",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/service.ProductCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/service.ProductCreateReply"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/system/product/get": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "/api/v1/product/get",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "System"
+                ],
+                "summary": "ProductGet",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/service.ProductGetRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/service.ProductGetReply"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/system/product/list": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "/api/v1/product/list",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "System"
+                ],
+                "summary": "ProductList",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/service.ProductListRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/service.ProductGetReply"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/system/product/update": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "/api/v1/product/update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "System"
+                ],
+                "summary": "ProductUpdate",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/service.ProductUpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/service.ProductUpdateReply"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/system/user/get": {
             "post": {
                 "security": [
                     {
@@ -279,7 +631,46 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "System"
+                ],
+                "summary": "UserGet",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/service.UserGetRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/service.UserGetReply"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/system/user/list": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "/api/v1/user/get",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "System"
                 ],
                 "summary": "UserList",
                 "parameters": [
@@ -327,6 +718,54 @@ var doc = `{
                 }
             }
         },
+        "service.OrganizationGetReply": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                }
+            }
+        },
+        "service.OrganizationGetRequest": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "service.OrganizationListRequest": {
+            "type": "object",
+            "properties": {
+                "ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "keyword": {
+                    "type": "string"
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "page": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
         "service.ProductCreateReply": {
             "type": "object",
             "properties": {
@@ -345,6 +784,9 @@ var doc = `{
                     "type": "string"
                 },
                 "name": {
+                    "type": "string"
+                },
+                "organization_id": {
                     "type": "string"
                 },
                 "price": {
@@ -398,6 +840,12 @@ var doc = `{
                 "limit": {
                     "type": "integer"
                 },
+                "organization_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "page": {
                     "type": "integer"
                 },
@@ -449,10 +897,16 @@ var doc = `{
                 "id": {
                     "type": "string"
                 },
+                "is_system": {
+                    "type": "boolean"
+                },
                 "last_name": {
                     "type": "string"
                 },
                 "login_time": {
+                    "type": "string"
+                },
+                "organization_id": {
                     "type": "string"
                 },
                 "phone_number": {
@@ -491,6 +945,12 @@ var doc = `{
                 },
                 "limit": {
                     "type": "integer"
+                },
+                "organization_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "page": {
                     "type": "integer"

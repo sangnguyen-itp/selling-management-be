@@ -6,7 +6,9 @@ import (
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"selling-management-be/conf"
-	"selling-management-be/handler"
+	"selling-management-be/handler/client"
+	"selling-management-be/handler/common"
+	"selling-management-be/handler/system"
 	"selling-management-be/middleware"
 )
 
@@ -28,25 +30,59 @@ func Run() {
 
 	auth := root.Group("/auth")
 	{
-		auth.POST("/login", handler.Login())
+		auth.POST("/login", common.Login())
 		auth.POST("/forgot-password")
 	}
 
 	v1 := root.Group("/v1")
 	{
 		v1.Use(middleware.AuthMiddleware())
-		user := v1.Group("/user")
+		clientEndpoint := v1.Group("/client")
 		{
-			user.POST("/get", handler.UserGet())
-			user.POST("/list", handler.UserList())
+			clientEndpoint.Use(middleware.ClientMiddleware())
+			user := clientEndpoint.Group("/user")
+			{
+				user.POST("/get", client.UserGet())
+				user.POST("/list", client.UserList())
+			}
+
+			organization := clientEndpoint.Group("/organization")
+			{
+				organization.POST("/get", client.OrganizationGet())
+			}
+
+			product := clientEndpoint.Group("/product")
+			{
+				product.POST("/get", client.ProductGet())
+				product.POST("/list", client.ProductList())
+				product.POST("/create", client.ProductCreate())
+				product.POST("/update", client.ProductUpdate())
+				product.POST("/import", client.ProductImport())
+			}
 		}
 
-		product := v1.Group("/product")
+		systemEndpoint := v1.Group("/system")
 		{
-			product.POST("/get", handler.ProductGet())
-			product.POST("/list", handler.ProductList())
-			product.POST("/create", handler.ProductCreate())
-			product.POST("/update", handler.ProductUpdate())
+			clientEndpoint.Use(middleware.SystemMiddleware())
+			user := systemEndpoint.Group("/user")
+			{
+				user.POST("/get", system.UserGet())
+				user.POST("/list", client.UserList())
+			}
+
+			organization := systemEndpoint.Group("/organization")
+			{
+				organization.POST("/get", system.OrganizationGet())
+				organization.POST("/list", system.OrganizationList())
+			}
+
+			product := systemEndpoint.Group("/product")
+			{
+				product.POST("/get", client.ProductGet())
+				product.POST("/list", system.ProductList())
+				product.POST("/create", system.ProductCreate())
+				product.POST("/update", system.ProductUpdate())
+			}
 		}
 	}
 

@@ -1,4 +1,4 @@
-package handler
+package client
 
 import (
 	"github.com/gin-gonic/gin"
@@ -12,14 +12,14 @@ import (
 
 // ProductList docs
 // @Summary      ProductList
-// @Description  /api/v1/product/list
-// @Tags         Product
+// @Description  /api/v1/client/product/list
+// @Tags         Client
 // @Accept       json
 // @Produce      json
 // @Param   	 body  body   service.ProductListRequest  true "body"
 // @Success      201  {object}  []service.ProductGetReply
 // @Security     ApiKeyAuth
-// @Router       /v1/product/list [post]
+// @Router       /v1/client/product/list [post]
 func ProductList() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var request service.ProductListRequest
@@ -29,9 +29,7 @@ func ProductList() gin.HandlerFunc {
 		}
 
 		actor := context.NewBase(ctx)
-		if !actor.IsSystem {
-			request.OrganizationIds = append(request.OrganizationIds, actor.OrganizationID)
-		}
+		request.OrganizationIds = []string{actor.OrganizationID}
 
 		reply, err := service.ProductList(&request)
 		if err != nil {

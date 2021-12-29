@@ -1,4 +1,4 @@
-package handler
+package client
 
 import (
 	"github.com/gin-gonic/gin"
@@ -10,37 +10,38 @@ import (
 	"selling-management-be/service"
 )
 
-// ProductGet docs
-// @Summary      ProductGet
-// @Description  /api/v1/product/get
-// @Tags         Product
+// ProductCreate docs
+// @Summary      ProductCreate
+// @Description  /api/v1/client/product/create
+// @Tags         Client
 // @Accept       json
 // @Produce      json
-// @Param   	 body  body   service.ProductGetRequest  true "body"
-// @Success      201  {object}  service.ProductGetReply
+// @Param   	 body  body   service.ProductCreateRequest  true "body"
+// @Success      201  {object}  service.ProductCreateReply
 // @Security     ApiKeyAuth
-// @Router       /v1/product/get [post]
-func ProductGet() gin.HandlerFunc {
+// @Router       /v1/client/product/create [post]
+func ProductCreate() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		var request service.ProductGetRequest
+		var request service.ProductCreateRequest
 		if err := ctx.ShouldBindJSON(&request); err != nil {
 			app.Response(ctx, 400, error_code.ErrorRequest, nil)
 			return
 		}
 
 		actor := context.NewBase(ctx)
-		if !actor.IsSystem {
-			request.OrganizationID = actor.OrganizationID
-		}
+		request.CreatedAt = actor.UpdateTime
+		request.CreatedBy = actor.UserID
+		request.UpdatedAt = actor.UpdateTime
+		request.UpdatedBy = actor.UserID
+		request.OrganizationID = actor.OrganizationID
 
-		reply, err := service.ProductGet(&request)
+		reply, err := service.ProductCreate(&request)
 		if err != nil {
 			logger.Log().Error(domain.ProductDomain, "service.ProductGet", err)
 			app.Response(ctx, 500, error_code.ServiceError, nil)
 			return
 		}
 
-		app.Response(ctx, 200, "OK", reply)
+		app.Response(ctx, 201, "OK", reply)
 	}
 }
-
