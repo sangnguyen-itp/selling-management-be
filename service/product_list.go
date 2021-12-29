@@ -9,6 +9,7 @@ import (
 type ProductListRequest struct {
 	Ids             []string `json:"ids"`
 	OrganizationIds []string `json:"organization_ids"`
+	Codes           []string `json:"codes"`
 	Status          string   `json:"status"`
 	Keyword         string   `json:"keyword"`
 	pagination.Pagination
@@ -22,6 +23,10 @@ func ProductList(request *ProductListRequest) (reply []*ProductGetReply, err err
 
 	if len(request.OrganizationIds) > 0 {
 		sql = sql.Where("organization_id IN (?)", request.OrganizationIds)
+	}
+
+	if len(request.Codes) > 0 {
+		sql = sql.Where("code IN (?)", request.Codes)
 	}
 
 	if len(request.Status) > 0 {

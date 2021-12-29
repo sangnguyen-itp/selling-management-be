@@ -11,9 +11,13 @@ import (
 )
 
 type ProductCreateRequest struct {
-	Name           string          `json:"name"`
 	Code           string          `json:"code"`
-	Price          decimal.Decimal `json:"price"`
+	Type           string          `json:"type"`
+	Name           string          `json:"name"`
+	WholesalePrice decimal.Decimal `json:"wholesale_price"`
+	RetailPrice    decimal.Decimal `json:"retail_price"`
+	RetailUnit     string          `json:"retail_unit"`
+	WholesaleUnit  string          `json:"wholesale_unit"`
 	Currency       string          `json:"currency"`
 	Status         string          `json:"status"`
 	OrganizationID string          `json:"organization_id"`
@@ -36,7 +40,8 @@ func ProductCreate(request *ProductCreateRequest) (reply *ProductCreateReply, er
 	id := generate_id.NewID(domain.ProductDomain)
 	product.ID = id
 	product.SearchName = product.Name
-	product.Price = request.Price
+	product.RetailPrice = request.RetailPrice
+	product.WholesalePrice = request.WholesalePrice
 	product.Status = product_status.Active
 
 	if err = mainService.db.Create(&product).Error; err != nil {

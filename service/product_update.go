@@ -9,16 +9,19 @@ import (
 )
 
 type ProductUpdateRequest struct {
-	ID       string          `json:"id"`
-	Code     string          `json:"code"`
-	Name     string          `json:"name"`
-	Price    decimal.Decimal `json:"price"`
-	Currency string          `json:"currency"`
-	Status   string          `json:"status"`
-
-	OrganizationID string    `json:"-"`
-	UpdatedBy      string    `json:"-"`
-	UpdatedAt      time.Time `json:"-"`
+	ID             string          `json:"id"`
+	Code           string          `json:"code"`
+	Type           string          `json:"type"`
+	Name           string          `json:"name"`
+	WholesalePrice decimal.Decimal `json:"wholesale_price"`
+	RetailPrice    decimal.Decimal `json:"retail_price"`
+	RetailUnit     string          `json:"retail_unit"`
+	WholesaleUnit  string          `json:"wholesale_unit"`
+	Currency       string          `json:"currency"`
+	Status         string          `json:"status"`
+	OrganizationID string          `json:"-"`
+	UpdatedBy      string          `json:"-"`
+	UpdatedAt      time.Time       `json:"-"`
 }
 
 type ProductUpdateReply struct {
@@ -60,8 +63,20 @@ func getProductUpdateDataMap(request *ProductUpdateRequest) map[string]interface
 		data["name"] = request.Name
 	}
 
-	if !request.Price.IsZero() {
-		data["price"] = request.Price
+	if !request.RetailPrice.IsZero() {
+		data["retail_price"] = request.RetailPrice
+	}
+
+	if !request.RetailPrice.IsZero() {
+		data["wholesale_price"] = request.WholesalePrice
+	}
+
+	if len(request.RetailUnit) > 0 {
+		data["retail_unit"] = request.RetailPrice
+	}
+
+	if len(request.RetailUnit) > 0 {
+		data["wholesale_unit"] = request.WholesaleUnit
 	}
 
 	if len(request.Currency) > 0 {

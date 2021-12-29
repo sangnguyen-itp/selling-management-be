@@ -58,21 +58,46 @@ func ProductImport() gin.HandlerFunc {
 		ignoreFirst := true
 		err = defaultSheet.ForEachRow(func(r *xlsx.Row) error {
 			if !ignoreFirst {
-				name := r.GetCell(0).String()
-				code := r.GetCell(1).String()
-				price := r.GetCell(2).String()
-				currency := r.GetCell(3).String()
+				tpe := r.GetCell(0).String()
+				name := r.GetCell(1).String()
+				code := r.GetCell(2).String()
+				wholesalePrice := r.GetCell(3).String()
+				retailPrice := r.GetCell(4).String()
+				wholesaleUnit := r.GetCell(5).String()
+				retailUnit := r.GetCell(6).String()
+				currency := r.GetCell(7).String()
 
-				priceDecimal, err := decimal.NewFromString(price)
-				if err != nil {
-					logger.Log().Error(domain.ProductDomain, "file line is invalid", err)
-					app.Response(ctx, 400, fmt.Sprintf("err: line"), nil)
-					return err
+				if len(tpe) == 0 && len(name) == 0 && len(code) == 0 {
+					return nil
 				}
+
+				var wholesalePriceDecimal, retailPriceDecimal = decimal.NewFromInt(0), decimal.NewFromInt(0)
+				if len(wholesalePrice) > 0 {
+					wholesalePriceDecimal, err = decimal.NewFromString(wholesalePrice)
+					if err != nil {
+						logger.Log().Error(domain.ProductDomain, "file line is invalid", err)
+						app.Response(ctx, 400, fmt.Sprintf("err: line"), nil)
+						return err
+					}
+				}
+
+				if len(retailPrice) > 0 {
+					retailPriceDecimal, err = decimal.NewFromString(retailPrice)
+					if err != nil {
+						logger.Log().Error(domain.ProductDomain, "file line is invalid", err)
+						app.Response(ctx, 400, fmt.Sprintf("err: line"), nil)
+						return err
+					}
+				}
+
 				request = append(request, &service.ProductCreateRequest{
+					Type:           tpe,
 					Name:           name,
 					Code:           code,
-					Price:          priceDecimal,
+					WholesalePrice: wholesalePriceDecimal,
+					RetailPrice:    retailPriceDecimal,
+					WholesaleUnit:  wholesaleUnit,
+					RetailUnit:     retailUnit,
 					Currency:       currency,
 					OrganizationID: actor.OrganizationID,
 					UpdatedBy:      actor.UserID,
@@ -90,7 +115,7 @@ func ProductImport() gin.HandlerFunc {
 			return
 		}
 
-		_, err = service.ProductBatchInsert(&service.ProductBatchInsertRequest{
+		_, err = service.ProductBatchPut(&service.ProductBatchInsertRequest{
 			Products: request,
 		})
 		if err != nil {

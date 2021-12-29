@@ -17,7 +17,10 @@ type Product struct {
 	Type           string          `json:"type"`
 	Name           string          `json:"name"`
 	SearchName     string          `json:"search_name" gorm:"index:idx_search_name"`
-	Price          decimal.Decimal `json:"price" gorm:"type:decimal(20,8);"`
+	WholesalePrice decimal.Decimal `json:"wholesale_price" gorm:"type:decimal(20,0);"`
+	RetailPrice    decimal.Decimal `json:"retail_price" gorm:"type:decimal(20,0);"`
+	RetailUnit     string          `json:"retail_unit"`
+	WholesaleUnit  string          `json:"wholesale_unit"`
 	Currency       string          `json:"currency"`
 	Status         string          `json:"status"`
 	OrganizationID string          `json:"organization_id" gorm:"index:idx_product_organization"`
@@ -43,6 +46,3 @@ func (p *Product) Decode(bytes string) error {
 	return err
 }
 
-func (p *Product) BuildSearch() {
-
-}

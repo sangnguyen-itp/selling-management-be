@@ -12,33 +12,62 @@ type ProductBatchInsertRequest struct {
 	Products []*ProductCreateRequest
 }
 
-type ProductBatchInsertReply struct {}
+type ProductBatchInsertReply struct{}
 
-func ProductBatchInsert(request *ProductBatchInsertRequest) (*ProductBatchInsertReply, error){
+func ProductBatchPut(request *ProductBatchInsertRequest) (*ProductBatchInsertReply, error) {
 	if request != nil && len(request.Products) > 0 {
 		tx := mainService.db.Begin()
 		var products []*model.Product
 		for _, p := range request.Products {
-			var product model.Product
-			if err := mapstructure.Decode(p, &product); err != nil {
+			product, err := isUpdateProduct(p)
+			if err != nil {
 				return nil, err
 			}
-
-			id := generate_id.NewID(domain.ProductDomain)
-			product.ID = id
-			product.SearchName = product.Name
-			product.Price = p.Price
-			product.Status = product_status.Active
-
-			products = append(products, &product)
+			products = append(products, product)
 		}
 
-		if err := tx.Create(products).Error; err != nil {
-			tx.Rollback()
-			return nil, err
+		if len(products) > 0 {
+			if err := tx.Save(&products).Error; err != nil {
+				tx.Rollback()
+				return nil, err
+			}
 		}
+
 		tx.Commit()
 	}
 
 	return &ProductBatchInsertReply{}, nil
+}
+
+func isUpdateProduct(p *ProductCreateRequest) (*model.Product, error) {
+	var putProduct model.Product
+	if err := mapstructure.Decode(p, &putProduct); err != nil {
+		return nil, err
+	}
+
+	putProducts, err := ProductList(&ProductListRequest{
+		Codes: []string{p.Code},
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	if len(putProducts) > 0 {
+		if err = mapstructure.Decode(putProducts[0], &putProduct); err != nil {
+			return nil, err
+		}
+
+		putProduct.RetailPrice = p.RetailPrice
+		putProduct.WholesalePrice = p.WholesalePrice
+		return &putProduct, nil
+	}
+
+	id := generate_id.NewID(domain.ProductDomain)
+	putProduct.ID = id
+	putProduct.SearchName = p.Name
+	putProduct.RetailPrice = p.RetailPrice
+	putProduct.WholesalePrice = p.WholesalePrice
+	putProduct.Status = product_status.Active
+
+	return &putProduct, nil
 }

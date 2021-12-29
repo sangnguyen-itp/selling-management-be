@@ -12,11 +12,18 @@ type ProductGetRequest struct {
 }
 
 type ProductGetReply struct {
-	ID       string          `gorm:"primaryKey"`
-	Code     string          `json:"code"`
-	Name     string          `json:"name"`
-	Price    decimal.Decimal `json:"price"`
+	ID             string          `gorm:"primaryKey"`
+	Code           string          `json:"code" gorm:"index:idx_code,unique"`
+	Type           string          `json:"type"`
+	Name           string          `json:"name"`
+	SearchName     string          `json:"search_name" gorm:"index:idx_search_name"`
+	WholesalePrice decimal.Decimal `json:"wholesale_price" gorm:"type:decimal(20,0);"`
+	RetailPrice    decimal.Decimal `json:"retail_price" gorm:"type:decimal(20,0);"`
+	RetailUnit     string          `json:"retail_unit"`
+	WholesaleUnit  string          `json:"wholesale_unit"`
 	Currency string          `json:"currency"`
+	Status         string          `json:"status"`
+	OrganizationID string          `json:"organization_id" gorm:"index:idx_product_organization"`
 }
 
 func ProductGet(request *ProductGetRequest) (reply *ProductGetReply, err error) {
@@ -40,6 +47,7 @@ func toProductGetReply(product *model.Product) (*ProductGetReply, error) {
 		return nil, err
 	}
 
-	reply.Price = product.Price
+	reply.RetailPrice = product.RetailPrice
+	reply.WholesalePrice = product.WholesalePrice
 	return &reply, nil
 }
