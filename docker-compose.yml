@@ -9,8 +9,6 @@ services:
     depends_on:
       - db
     restart: always
-    networks:
-      - sm_network
 
   db:
     image: library/postgres:alpine
@@ -20,10 +18,4 @@ services:
       POSTGRES_PASSWORD: S@ng29031998
       POSTGRES_DB: selling-management
     ports:
-      - "5432:5432"
-    networks:
-      - sm_network
-
-networks:
-  sm_network:
-    driver: bridge
+      - 5432:5432
