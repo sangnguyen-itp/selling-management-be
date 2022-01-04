@@ -28,7 +28,7 @@ func Login() gin.HandlerFunc{
 		reply, err := service.Login(&request)
 		if err != nil {
 			logger.Log().Error(domain.AuthDomain, "service.Login", err)
-			app.Response(ctx, 500, err.Error(), nil)
+			app.Response(ctx, 400, err.Error(), nil)
 			return
 		}
 

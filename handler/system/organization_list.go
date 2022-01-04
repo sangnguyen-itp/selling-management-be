@@ -30,7 +30,7 @@ func OrganizationList() gin.HandlerFunc {
 		reply, err := service.OrganizationList(&request)
 		if err != nil {
 			logger.Log().Error(domain.OrganizationDomain, "service.OrganizationList", err)
-			app.Response(ctx, 500, error_code.ServiceError, nil)
+			app.Response(ctx, 400, error_code.ServiceError, nil)
 			return
 		}
 

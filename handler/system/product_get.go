@@ -36,7 +36,7 @@ func ProductGet() gin.HandlerFunc {
 		reply, err := service.ProductGet(&request)
 		if err != nil {
 			logger.Log().Error(domain.ProductDomain, "service.ProductGet", err)
-			app.Response(ctx, 500, error_code.ServiceError, nil)
+			app.Response(ctx, 400, error_code.ServiceError, nil)
 			return
 		}
 

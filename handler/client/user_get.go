@@ -34,7 +34,7 @@ func UserGet() gin.HandlerFunc {
 		reply, err := service.UserGet(&request)
 		if err != nil {
 			logger.Log().Error(domain.UserDomain, "service.GetUser", err)
-			app.Response(ctx, 500, error_code.ServiceError, nil)
+			app.Response(ctx, 400, error_code.ServiceError, nil)
 			return
 		}
 

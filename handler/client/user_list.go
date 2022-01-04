@@ -34,7 +34,7 @@ func UserList() gin.HandlerFunc {
 		reply, err := service.UserList(&request)
 		if err != nil {
 			logger.Log().Error(domain.UserDomain, "service.UserList", err)
-			app.Response(ctx, 500, error_code.ServiceError, nil)
+			app.Response(ctx, 400, error_code.ServiceError, nil)
 			return
 		}
 

@@ -34,7 +34,7 @@ func ProductList() gin.HandlerFunc {
 		reply, err := service.ProductList(&request)
 		if err != nil {
 			logger.Log().Error(domain.ProductDomain, "service.UserList", err)
-			app.Response(ctx, 500, error_code.ServiceError, nil)
+			app.Response(ctx, 400, error_code.ServiceError, nil)
 			return
 		}
 

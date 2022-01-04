@@ -35,7 +35,7 @@ func ProductUpdate() gin.HandlerFunc {
 		reply, err := service.ProductUpdate(&request)
 		if err != nil {
 			logger.Log().Error(domain.ProductDomain, "service.ProductUpdate", err)
-			app.Response(ctx, 500, error_code.ServiceError, nil)
+			app.Response(ctx, 400, error_code.ServiceError, nil)
 			return
 		}
 

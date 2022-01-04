@@ -34,7 +34,7 @@ func OrganizationGet() gin.HandlerFunc {
 		reply, err := service.OrganizationGet(&request)
 		if err != nil {
 			logger.Log().Error(domain.OrganizationDomain, "service.OrganizationGet", err)
-			app.Response(ctx, 500, error_code.ServiceError, nil)
+			app.Response(ctx, 400, error_code.ServiceError, nil)
 			return
 		}
 

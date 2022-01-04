@@ -5,6 +5,7 @@ import (
 	"selling-management-be/helper/pagination"
 	"selling-management-be/pkg/cipher"
 	"selling-management-be/pkg/token"
+	"time"
 )
 
 type LoginRequest struct {
@@ -13,7 +14,11 @@ type LoginRequest struct {
 }
 
 type LoginReply struct {
-	AccessToken string
+	AccessToken string `json:"access_token"`
+	OrganizationID string `json:"organization_id"`
+	UserID string `json:"user_id"`
+	LoginTime time.Time `json:"login_time"`
+	IsSystem bool `json:"is_system"`
 }
 
 func Login(request *LoginRequest) (reply *LoginReply, err error) {
@@ -40,5 +45,11 @@ func Login(request *LoginRequest) (reply *LoginReply, err error) {
 		UserID: userData.ID,
 	})
 
-	return &LoginReply{AccessToken: tokenData.TokenValue}, nil
+	return &LoginReply{
+		AccessToken: tokenData.TokenValue,
+		OrganizationID: userData.OrganizationID,
+		UserID: userData.ID,
+		LoginTime: time.Now(),
+		IsSystem: userData.IsSystem,
+	}, nil
 }
